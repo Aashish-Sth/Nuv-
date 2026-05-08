@@ -1,0 +1,111 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum UserRole {
+  CUSTOMER
+  STAFF
+  ADMIN
+}
+
+enum OrderStatus {
+  PENDING
+  CONFIRMED
+  PREPARING
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+}
+
+model User {
+  id               String       @id @default(cuid())
+  name             String
+  email            String       @unique
+  passwordHash     String
+  role             UserRole     @default(CUSTOMER)
+  refreshToken     String?
+  isActive         Boolean      @default(true)
+  createdAt        DateTime     @default(now())
+  updatedAt        DateTime     @updatedAt
+  orders           Order[]
+  ownedRestaurants Restaurant[]
+  auditLogs        AuditLog[]
+}
+
+model Restaurant {
+  id           String     @id @default(cuid())
+  name         String
+  slug         String     @unique
+  description  String
+  cuisine      String
+  cuisines     String[]
+  rating       Float      @default(0)
+  totalRatings Int        @default(0)
+  deliveryTime Int
+  minOrder     Float
+  image        String
+  isActive     Boolean    @default(true)
+  isVerified   Boolean    @default(false)
+  ownerId      String
+  owner        User       @relation(fields: [ownerId], references: [id])
+  menuItems    MenuItem[]
+  orders       Order[]
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+}
+
+model MenuItem {
+  id           String      @id @default(cuid())
+  name         String
+  description  String
+  price        Float
+  category     String
+  image        String?
+  isAvailable  Boolean     @default(true)
+  restaurantId String
+  restaurant   Restaurant  @relation(fields: [restaurantId], references: [id])
+  orderItems   OrderItem[]
+  createdAt    DateTime    @default(now())
+}
+
+model Order {
+  id              String      @id @default(cuid())
+  status          OrderStatus @default(PENDING)
+  total           Float
+  deliveryAddress String
+  notes           String?
+  customerId      String
+  customer        User        @relation(fields: [customerId], references: [id])
+  restaurantId    String
+  restaurant      Restaurant  @relation(fields: [restaurantId], references: [id])
+  items           OrderItem[]
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+}
+
+model OrderItem {
+  id         String   @id @default(cuid())
+  qty        Int
+  price      Float
+  name       String
+  orderId    String
+  order      Order    @relation(fields: [orderId], references: [id])
+  menuItemId String
+  menuItem   MenuItem @relation(fields: [menuItemId], references: [id])
+}
+
+model AuditLog {
+  id            String   @id @default(cuid())
+  action        String
+  entityType    String
+  entityId      String
+  performedById String
+  performedBy   User     @relation(fields: [performedById], references: [id])
+  metadata      Json?
+  createdAt     DateTime @default(now())
+}

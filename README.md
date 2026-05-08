@@ -73,3 +73,11 @@ bun run preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+## Backend Setup
+
+1. `cd server && pnpm install`
+2. Copy `.env.example` to `.env` and fill in real values.
+3. `pnpm prisma migrate dev --name init`
+4. `pnpm prisma db seed`
+5. `pnpm dev`
