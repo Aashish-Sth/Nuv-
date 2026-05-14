@@ -1,6 +1,12 @@
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      // set BACKEND_URL via environment; defaults to Fastify backend
+      backendUrl: process.env.BACKEND_URL ?? "http://localhost:3001",
+    },
+  },
   modules: [
     "@pinia/nuxt",
     "@vueuse/motion/nuxt",

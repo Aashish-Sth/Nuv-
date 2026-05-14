@@ -1,0 +1,46 @@
+# Nuvé Project — Cursor Rules
+
+## Project Overview
+Nuvé is a premium food delivery platform. This is a pnpm monorepo.
+- app/         → User-facing frontend (Nuxt 3, Vue 3, Tailwind, GSAP)
+- admin/       → Staff/Admin dashboard (Nuxt 3, Vue 3, Tailwind)
+- server/      → Backend REST API (Fastify, Prisma, PostgreSQL)
+- packages/shared/ → Shared TypeScript types used across all workspaces
+
+## Brand
+- Primary color: #3DBA7A (Nuvé green)
+- Dark theme: backgrounds #080808 / #101010 / #191919
+- Fonts: DM Serif Display (headings), DM Sans (UI/body)
+- Admin dashboard uses a LIGHT theme — clean, data-dense, professional
+
+## Tech Decisions (never deviate from these)
+- Runtime: Node.js 18+, pnpm workspaces
+- Backend: Fastify + @fastify/cors + @fastify/jwt + Prisma ORM + PostgreSQL
+- Auth: JWT (access token 15min + refresh token 7d stored in httpOnly cookie)
+- Passwords: bcrypt (saltRounds: 12)
+- Validation: Zod on all request bodies
+- Admin UI: Nuxt 3, Tailwind, @headlessui/vue, @vueuse/core, Pinia, recharts via vue-chartjs
+- Shared types: packages/shared/types/ — imported as @nuве/shared in both admin and server
+
+## Code Style
+- TypeScript everywhere. No implicit any.
+- Vue: always <script setup lang="ts">
+- Async/await only — no .then() chains
+- Prisma: never use raw SQL unless explicitly asked
+- API responses always: { success: boolean, data?: T, error?: string, message?: string }
+- All Fastify routes have explicit Zod schema validation via fastify-zod or @fastify/type-provider-zod
+- No console.log in production code — use Fastify's built-in logger (request.log.info)
+
+## File naming
+- Components: PascalCase.vue
+- Composables: useXxx.ts
+- Stores: xxxStore.ts (Pinia)
+- API routes: kebab-case (e.g. /api/restaurants/:id)
+- Prisma models: PascalCase singular (Restaurant, Order, User)
+
+## Do not
+- Use Express (Fastify only)
+- Use any UI component library other than headlessui on admin side
+- Use localStorage for auth tokens (httpOnly cookies only)
+- Generate placeholder/TODO comments — write real, complete code
+- Use default Prisma SQLite in production config — always PostgreSQL
