@@ -1,11 +1,6 @@
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineNuxtConfig({
-  postcss: {
-    plugins: {
-      '@tailwindcss/postcss': {},
-    },
-  },
   runtimeConfig: {
     public: {
       // set BACKEND_URL via environment; defaults to Fastify backend
