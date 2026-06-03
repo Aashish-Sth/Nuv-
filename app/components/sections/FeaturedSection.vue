@@ -4,66 +4,12 @@ const activeCategory = ref('All')
 const categories = ['All', 'Italian', 'Asian', 'American', 'Healthy', 'Desserts']
 
 const dishes = [
-  {
-    id: 'r1',
-    name: 'Truffle Mushroom Risotto',
-    restaurant: 'Osteria Verde',
-    image: '/images/food-pasta.png',
-    price: 24.50,
-    rating: 4.9,
-    cuisine: 'Italian',
-    deliveryTime: '30-40 min',
-  },
-  {
-    id: 'r2',
-    name: 'Salmon Poké Bowl',
-    restaurant: 'Pacific Bowl Co.',
-    image: '/images/food-pokebowl.png',
-    price: 18.90,
-    rating: 4.7,
-    cuisine: 'Asian',
-    deliveryTime: '20-30 min',
-  },
-  {
-    id: 'r3',
-    name: 'Wagyu Smash Burger',
-    restaurant: 'The Grill Room',
-    image: '/images/food-burger.png',
-    price: 21.00,
-    rating: 4.8,
-    cuisine: 'American',
-    deliveryTime: '25-35 min',
-  },
-  {
-    id: 'r4',
-    name: 'Spicy Tuna Tartare',
-    restaurant: 'Sakura Kitchen',
-    image: '/images/food-pokebowl.png',
-    price: 19.50,
-    rating: 4.6,
-    cuisine: 'Asian',
-    deliveryTime: '20-30 min',
-  },
-  {
-    id: 'r5',
-    name: 'Carbonara Classica',
-    restaurant: 'Osteria Verde',
-    image: '/images/food-pasta.png',
-    price: 22.00,
-    rating: 4.8,
-    cuisine: 'Italian',
-    deliveryTime: '30-40 min',
-  },
-  {
-    id: 'r6',
-    name: 'BBQ Bacon Stack',
-    restaurant: 'The Grill Room',
-    image: '/images/food-burger.png',
-    price: 19.90,
-    rating: 4.5,
-    cuisine: 'American',
-    deliveryTime: '25-35 min',
-  },
+  { id: 'd1', restaurantId: 'r1', name: 'Truffle Mushroom Risotto', restaurant: 'Osteria Verde', image: '/images/food-pasta.png', price: 24.50, rating: 4.9, cuisine: 'Italian', deliveryTime: '30-40 min' },
+  { id: 'd2', restaurantId: 'r2', name: 'Salmon Poké Bowl', restaurant: 'Pacific Bowl Co.', image: '/images/food-pokebowl.png', price: 18.90, rating: 4.7, cuisine: 'Asian', deliveryTime: '20-30 min' },
+  { id: 'd3', restaurantId: 'r3', name: 'Wagyu Smash Burger', restaurant: 'The Grill Room', image: '/images/food-burger.png', price: 21.00, rating: 4.8, cuisine: 'American', deliveryTime: '25-35 min' },
+  { id: 'd4', restaurantId: 'r4', name: 'Spicy Tuna Tartare', restaurant: 'Sakura Kitchen', image: '/images/food-pokebowl.png', price: 19.50, rating: 4.6, cuisine: 'Asian', deliveryTime: '20-30 min' },
+  { id: 'd5', restaurantId: 'r1', name: 'Carbonara Classica', restaurant: 'Osteria Verde', image: '/images/food-pasta.png', price: 22.00, rating: 4.8, cuisine: 'Italian', deliveryTime: '30-40 min' },
+  { id: 'd6', restaurantId: 'r3', name: 'BBQ Bacon Stack', restaurant: 'The Grill Room', image: '/images/food-burger.png', price: 19.90, rating: 4.5, cuisine: 'American', deliveryTime: '25-35 min' },
 ]
 
 const filteredDishes = computed(() => {
@@ -121,6 +67,12 @@ const filteredDishes = computed(() => {
             v-bind="dish"
           />
         </TransitionGroup>
+      </div>
+
+      <!-- Empty state for filtered view -->
+      <div v-if="filteredDishes.length === 0" class="text-center py-16">
+        <p class="text-nv-muted">No featured dishes in this category yet.</p>
+        <NuxtLink to="/menu" class="inline-block mt-3 text-sm text-nv-green hover:underline">Browse full menu →</NuxtLink>
       </div>
     </div>
   </section>

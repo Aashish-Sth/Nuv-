@@ -122,11 +122,14 @@ async function handleLogout() {
               d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
             />
           </svg>
-          <span
-            class="absolute -top-1 -right-1 w-4.5 h-4.5 bg-nv-green text-nv-void text-[10px] font-bold flex items-center justify-center rounded-full"
-          >
-            {{ itemCount }}
-          </span>
+          <Transition name="badge">
+            <span
+              v-if="itemCount > 0"
+              class="absolute -top-1 -right-1 min-w-[18px] h-[18px] bg-nv-green text-nv-void text-[10px] font-bold flex items-center justify-center rounded-full px-[3px]"
+            >
+              {{ itemCount > 99 ? '99+' : itemCount }}
+            </span>
+          </Transition>
         </NuxtLink>
 
         <!-- Auth -->
@@ -136,8 +139,8 @@ async function handleLogout() {
             >{{ user.name }}</span
           >
           <button
-            @click="handleLogout"
             class="text-xs sm:text-sm px-2.5 sm:px-3 py-1.5 rounded border border-nv-border text-nv-muted hover:text-red-400 hover:border-red-400/50 transition-colors"
+            @click="handleLogout"
           >
             Logout
           </button>
@@ -212,8 +215,8 @@ async function handleLogout() {
           </NuxtLink>
           <button
             v-if="user"
-            @click="handleLogout"
             class="text-left text-lg font-medium transition-colors duration-300 text-red-400 hover:text-red-300"
+            @click="handleLogout"
           >
             Logout
           </button>
@@ -234,5 +237,14 @@ async function handleLogout() {
 .mobile-menu-leave-to {
   opacity: 0;
   transform: translateY(-8px);
+}
+.badge-enter-active,
+.badge-leave-active {
+  transition: opacity 200ms ease, transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.badge-enter-from,
+.badge-leave-to {
+  opacity: 0;
+  transform: scale(0.5);
 }
 </style>

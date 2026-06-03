@@ -26,56 +26,24 @@ const allDishes = ref<any[]>([]);
 const api = useApi();
 
 const fallbackDishes = [
-  {
-    id: "r1",
-    name: "Truffle Mushroom Risotto",
-    restaurant: "Osteria Verde",
-    image: "/images/food-pasta.png",
-    price: 24.5,
-    rating: 4.9,
-    cuisine: "Italian",
-    deliveryTime: "30-40 min",
-  },
-  {
-    id: "r2",
-    name: "Salmon Poké Bowl",
-    restaurant: "Pacific Bowl Co.",
-    image: "/images/food-pokebowl.png",
-    price: 18.9,
-    rating: 4.7,
-    cuisine: "Asian",
-    deliveryTime: "20-30 min",
-  },
-  {
-    id: "r3",
-    name: "Wagyu Smash Burger",
-    restaurant: "The Grill Room",
-    image: "/images/food-burger.png",
-    price: 21.0,
-    rating: 4.8,
-    cuisine: "American",
-    deliveryTime: "25-35 min",
-  },
-  {
-    id: "r4",
-    name: "Spicy Tuna Tartare",
-    restaurant: "Sakura Kitchen",
-    image: "/images/food-pokebowl.png",
-    price: 19.5,
-    rating: 4.6,
-    cuisine: "Asian",
-    deliveryTime: "20-30 min",
-  },
-  {
-    id: "r5",
-    name: "Carbonara Classica",
-    restaurant: "Osteria Verde",
-    image: "/images/food-pasta.png",
-    price: 22.0,
-    rating: 4.8,
-    cuisine: "Italian",
-    deliveryTime: "30-40 min",
-  },
+  { id: "d1",  restaurantId: "r1", name: "Truffle Mushroom Risotto",  restaurant: "Osteria Verde",    image: "/images/food-pasta.png",    price: 24.50, rating: 4.9, cuisine: "Italian",  deliveryTime: "30-40 min" },
+  { id: "d5",  restaurantId: "r1", name: "Carbonara Classica",        restaurant: "Osteria Verde",    image: "/images/food-pasta.png",    price: 22.00, rating: 4.8, cuisine: "Italian",  deliveryTime: "30-40 min" },
+  { id: "d8",  restaurantId: "r1", name: "Margherita Napoletana",     restaurant: "Osteria Verde",    image: "/images/food-pasta.png",    price: 17.00, rating: 4.6, cuisine: "Italian",  deliveryTime: "25-35 min" },
+  { id: "d2",  restaurantId: "r2", name: "Salmon Poké Bowl",          restaurant: "Pacific Bowl Co.", image: "/images/food-pokebowl.png", price: 18.90, rating: 4.7, cuisine: "Asian",    deliveryTime: "20-30 min" },
+  { id: "d9",  restaurantId: "r2", name: "Teriyaki Salmon Bowl",      restaurant: "Pacific Bowl Co.", image: "/images/food-pokebowl.png", price: 20.50, rating: 4.8, cuisine: "Asian",    deliveryTime: "20-30 min" },
+  { id: "d4",  restaurantId: "r4", name: "Spicy Tuna Tartare",        restaurant: "Sakura Kitchen",   image: "/images/food-pokebowl.png", price: 19.50, rating: 4.6, cuisine: "Asian",    deliveryTime: "20-30 min" },
+  { id: "d15", restaurantId: "r4", name: "Miso Black Cod",            restaurant: "Sakura Kitchen",   image: "/images/food-pokebowl.png", price: 26.00, rating: 4.8, cuisine: "Asian",    deliveryTime: "20-30 min" },
+  { id: "d3",  restaurantId: "r3", name: "Wagyu Smash Burger",        restaurant: "The Grill Room",   image: "/images/food-burger.png",   price: 21.00, rating: 4.8, cuisine: "American", deliveryTime: "25-35 min" },
+  { id: "d6",  restaurantId: "r3", name: "BBQ Bacon Stack",           restaurant: "The Grill Room",   image: "/images/food-burger.png",   price: 19.90, rating: 4.5, cuisine: "American", deliveryTime: "25-35 min" },
+  { id: "d16", restaurantId: "r3", name: "Crispy Chicken Sandwich",   restaurant: "The Grill Room",   image: "/images/food-burger.png",   price: 17.50, rating: 4.6, cuisine: "American", deliveryTime: "25-35 min" },
+  { id: "d7",  restaurantId: "r5", name: "Green Goddess Bowl",        restaurant: "Verdant Kitchen",  image: "/images/food-pokebowl.png", price: 16.50, rating: 4.7, cuisine: "Healthy",  deliveryTime: "20-25 min" },
+  { id: "d10", restaurantId: "r5", name: "Açaí Power Bowl",           restaurant: "Verdant Kitchen",  image: "/images/food-pokebowl.png", price: 15.50, rating: 4.6, cuisine: "Healthy",  deliveryTime: "20-25 min" },
+  { id: "d11", restaurantId: "r5", name: "Quinoa Buddha Bowl",        restaurant: "Verdant Kitchen",  image: "/images/food-pokebowl.png", price: 14.90, rating: 4.5, cuisine: "Healthy",  deliveryTime: "20-25 min" },
+  { id: "d17", restaurantId: "r5", name: "Avocado & Kale Salad",      restaurant: "Verdant Kitchen",  image: "/images/food-pokebowl.png", price: 13.90, rating: 4.4, cuisine: "Healthy",  deliveryTime: "20-25 min" },
+  { id: "d12", restaurantId: "r6", name: "Chocolate Lava Cake",       restaurant: "Sweet Lab",        image: "/images/food-pasta.png",    price: 11.50, rating: 4.9, cuisine: "Desserts", deliveryTime: "25-35 min" },
+  { id: "d13", restaurantId: "r6", name: "Matcha Tiramisu",           restaurant: "Sweet Lab",        image: "/images/food-pokebowl.png", price: 10.90, rating: 4.8, cuisine: "Desserts", deliveryTime: "25-35 min" },
+  { id: "d14", restaurantId: "r6", name: "Vanilla Bean Panna Cotta",  restaurant: "Sweet Lab",        image: "/images/food-pasta.png",    price: 9.90,  rating: 4.7, cuisine: "Desserts", deliveryTime: "25-35 min" },
+  { id: "d18", restaurantId: "r6", name: "Crème Brûlée",              restaurant: "Sweet Lab",        image: "/images/food-pasta.png",    price: 10.50, rating: 4.8, cuisine: "Desserts", deliveryTime: "25-35 min" },
 ];
 
 const filteredDishes = computed(() => {
@@ -94,7 +62,6 @@ const filteredDishes = computed(() => {
 });
 
 onMounted(async () => {
-  // fetch restaurants and their menus, flatten into dish list
   try {
     const config = useRuntimeConfig();
     const baseUrl = config.public.backendUrl || "";
@@ -126,7 +93,6 @@ onMounted(async () => {
     }
     allDishes.value = dishes.length > 0 ? dishes : fallbackDishes;
   } catch (e) {
-    // fall back to sample list
     console.error("Failed to load menu:", e);
     allDishes.value = fallbackDishes;
   }
@@ -189,7 +155,7 @@ onMounted(async () => {
 
       <!-- Results count -->
       <p class="text-sm text-nv-dim mb-6">
-        {{ filteredDishes.length }} dishes found
+        {{ filteredDishes.length }} {{ filteredDishes.length === 1 ? 'dish' : 'dishes' }} found
       </p>
 
       <!-- Grid -->

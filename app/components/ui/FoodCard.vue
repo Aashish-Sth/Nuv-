@@ -15,11 +15,10 @@ const props = withDefaults(defineProps<Props>(), {
   deliveryTime: "25-35 min",
 });
 
-import { useCart } from "@/composables/useCart";
+const { addItem } = useCart();
+const justAdded = ref(false);
 
 const formattedPrice = computed(() => `$${props.price.toFixed(2)}`);
-
-const { addItem } = useCart();
 
 function handleAdd(e: Event) {
   e.stopPropagation();
@@ -34,12 +33,16 @@ function handleAdd(e: Event) {
     quantity: 1,
     image: props.image,
   });
+  justAdded.value = true;
+  setTimeout(() => {
+    justAdded.value = false;
+  }, 1500);
 }
 </script>
 
 <template>
   <NuxtLink
-    :to="`/restaurant/${id}`"
+    :to="`/restaurant/${restaurantId ?? id}`"
     class="group block bg-nv-surface border border-nv-border rounded-[12px] overflow-hidden transition-all duration-300 hover:border-nv-green/40 hover:-translate-y-1"
   >
     <!-- Image -->
@@ -87,25 +90,33 @@ function handleAdd(e: Event) {
       <div class="flex items-center justify-between">
         <span class="text-nv-green font-semibold">{{ formattedPrice }}</span>
         <button
-          class="flex items-center gap-1.5 text-xs text-nv-muted hover:text-nv-green transition-colors duration-300"
+          class="flex items-center gap-1.5 text-xs font-medium transition-all duration-200 active:scale-[0.92]"
+          :class="justAdded ? 'text-nv-green' : 'text-nv-muted hover:text-nv-green'"
           @click.stop.prevent="handleAdd"
         >
-          <svg
-            class="w-4 h-4"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M12 4.5v15m7.5-7.5h-15"
-            />
-          </svg>
-          Add
+          <Transition name="icon-swap" mode="out-in">
+            <svg v-if="!justAdded" key="plus" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+            </svg>
+            <svg v-else key="check" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+          </Transition>
+          {{ justAdded ? 'Added!' : 'Add' }}
         </button>
       </div>
     </div>
   </NuxtLink>
 </template>
+
+<style scoped>
+.icon-swap-enter-active,
+.icon-swap-leave-active {
+  transition: opacity 150ms ease, transform 150ms ease;
+}
+.icon-swap-enter-from,
+.icon-swap-leave-to {
+  opacity: 0;
+  transform: scale(0.7);
+}
+</style>

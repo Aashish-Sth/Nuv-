@@ -10,7 +10,6 @@ export default defineNuxtConfig({
   modules: [
     "@pinia/nuxt",
     "@vueuse/motion/nuxt",
-    "@nuxt/image",
     "@nuxtjs/google-fonts",
   ],
 
